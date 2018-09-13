@@ -152,10 +152,10 @@ class FirstOrderMarkovModel(object):
 
         w_minus_1 = '?'
         while w_minus_1 in self.terminal_characters:
-            w_minus_1 = np.random.choice(self.transitions[0].keys(),replace=True,p=self.transitions[0].values())
+            w_minus_1 = np.random.choice([*self.transitions[0].keys()],replace=True,p=[*self.transitions[0].values()])
         phrase = w_minus_1+' '
         while w_minus_1 not in self.terminal_characters:
-            w_minus_1 = np.random.choice(self.transitions[1][w_minus_1].keys(),replace=True,p=self.transitions[1][w_minus_1].values())
+            w_minus_1 = np.random.choice([*self.transitions[1][w_minus_1].keys()],replace=True,p=[*self.transitions[1][w_minus_1].values()])
             phrase += w_minus_1+' '
         return phrase
 
@@ -280,12 +280,12 @@ class SecondOrderMarkovModel(object):
         """
         w_minus_2 = '?'
         while w_minus_2 in self.terminal_characters:
-            w_minus_2 = np.random.choice(self.transitions[0].keys(),replace=True,p=self.transitions[0].values())
-        w_minus_1 = np.random.choice(self.transitions[1][w_minus_2].keys(),replace=True,p=self.transitions[1][w_minus_2].values())
+            w_minus_2 = np.random.choice([*self.transitions[0].keys()],replace=True,p=[*self.transitions[0].values()])
+        w_minus_1 = np.random.choice([*self.transitions[1][w_minus_2].keys()],replace=True,p=[*self.transitions[1][w_minus_2].values()])
         phrase = w_minus_2 + ' ' + w_minus_1 + ' '
         while w_minus_1 not in self.terminal_characters:
             t_mat = self.transitions[2][w_minus_2][w_minus_1]
-            w_i = np.random.choice(t_mat.keys(),replace=True,p=t_mat.values())
+            w_i = np.random.choice([*t_mat.keys()],replace=True,p=[*t_mat.values()])
             phrase += w_i + ' '
             w_minus_2 = w_minus_1
             w_minus_1 = w_i
